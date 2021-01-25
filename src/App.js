@@ -13,20 +13,8 @@ function playSelectedVideo( url ) {
   document.getElementById('html-video').play();
 }
 
-function onTimeUpdate( event, props ) {
-  console.log( '[onTimeUpdate]', props.activeVideo.id, event.currentTarget.currentTime );
-}
-
-function onPlay( event, props ) {
-  console.log( '[onPlay]', props.activeVideo.id, event );
-}
-
-function onPause( event, props ) {
-  console.log( '[onPause]', props.activeVideo.id, event );
-}
-
-function onLoadedMetadata ( event, props ) {
-  console.log( '[onLoadedMetadata]', props.activeVideo.id, event.currentTarget.duration, event.currentTarget );
+function onProgress ( data ) {
+  console.log( data );
 }
 
 function App() {
@@ -39,11 +27,7 @@ function App() {
             activePreview={false}
             activeVideo={video}
             playSelectedVideo={playSelectedVideo}
-
-            onLoadedMetadata={onLoadedMetadata}
-            onTimeUpdate={onTimeUpdate}
-            onPlay={onPlay}
-            onPause={onPause}
+            onProgress={onProgress}
           />
           <h1 className="title">Overlaid Text for Video</h1>
 

@@ -4,20 +4,30 @@
 import PropTypes from 'prop-types';
 
 // const { Fragment } = window.React;
-import { Fragment } from 'react';
+import { Fragment, useState, useRef, useEffect } from 'react';
 
-function Player(props) {
-  const {
-    activePreview,
-    activeVideo,
-    playSelectedVideo,
-    isYoutube,
-    onLoadedMetadata,
-    onTimeUpdate,
-    onPlay,
-    onPause,
-    onResize
-  } = props;
+function Player( props ) {
+  const { activePreview, activeVideo, playSelectedVideo, isYoutube, onProgress } = props;
+  const [ rect, setRect ] = useState( 0 );
+  const ref = useRef( null );
+
+  function resizeHandler () {
+    setRect( ref.current.getBoundingClientRect() );
+  }
+
+  function progressHandler ( event ) {
+    onProgress({
+      currentTime: event.currentTarget.currentTime,
+      duration: event.currentTarget.duration,
+      width: rect.width,
+      height: rect.height
+    });
+  }
+
+  useEffect(() => {
+    window.addEventListener( 'resize', resizeHandler );
+    return () => { window.removeEventListener( 'resize', resizeHandler ); }
+  });
 
   return(
     <Fragment>
@@ -50,18 +60,24 @@ function Player(props) {
           loop={activeVideo.preview ? false : true}
           poster={activeVideo.poster ? activeVideo.poster : ''}
 
-          onLoadedMetadata={ onLoadedMetadata ? function ( event ) {
-            onLoadedMetadata( event, props );
-          } : null }
-          onTimeUpdate={ onTimeUpdate ? function ( event ) {
-            onTimeUpdate( event, props );
-          } : null }
-          onPlay={ onPlay ? function ( event ) {
-            onPlay( event, props );
-          } : null }
-          onPause={ onPause ? function ( event ) {
-            onPause( event, props );
-          } : null }
+          ref={ref}
+          onLoadedData={ function ( event ) {
+            console.log( '[LoadedData]' );
+            resizeHandler();
+            progressHandler( event );
+          }}
+          onTimeUpdate={ function ( event ) {
+            console.log( '[TimeUpdate]' );
+            progressHandler( event );
+          }}
+          onPlay={ function ( event ) {
+            console.log( '[Play]' );
+            progressHandler( event );
+          }}
+          onPause={ function ( event ) {
+            console.log( '[Pause]' );
+            progressHandler( event );
+          }}
         >
           <source src={activeVideo.src} type="video/mp4" />
           <source src={(activeVideo.src).replace('mp4', 'ogg')} type="video/ogg" />

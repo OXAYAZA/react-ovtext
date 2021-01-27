@@ -4,10 +4,89 @@
 
 .container {
   width: 100%;
-  max-width: 800px;
+  max-width: 830px;
   margin: 0 auto;
+  padding: 0 15px;
 }
 
 * + .title {
   margin-top: 20px;
+}
+
+.player-wrap {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba( black, .6 );
+  }
+}
+
+
+.overlay-text {
+  position: absolute;
+  z-index: 1;
+  font-size: 30px;
+  font-weight: 900;
+  opacity: 0;
+  transition: 0s;
+
+  &.overlay-text-active {
+    opacity: 1;
+  }
+
+  &.overlay-text-ended {
+    opacity: 0;
+  }
+}
+
+.overlay-text-1 {
+  top: 10%;
+  left: 3%;
+
+  &.overlay-text-active,
+  &.overlay-text-ended {
+    left: 8%;
+    transition: opacity 1s, left linear 5s;
+  }
+}
+
+.overlay-text-2 {
+  bottom: 10%;
+  right: 8%;
+  text-align: right;
+
+  &.overlay-text-active,
+  &.overlay-text-ended {
+    right: 3%;
+    transition: opacity 1s, right linear 5s;
+  }
+}
+
+.overlay-text-3 {
+  top: 20%;
+  left: 23%;
+
+  &.overlay-text-active,
+  &.overlay-text-ended {
+    left: 35%;
+    transition: opacity 1s, left linear 5s;
+  }
+}
+
+.overlay-text-4 {
+  top: 35%;
+  right: 17%;
+
+  &.overlay-text-active,
+  &.overlay-text-ended {
+    right: 13%;
+    transition: opacity 1s, right linear 5s;
+  }
 }

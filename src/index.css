@@ -17,6 +17,10 @@ body {
   color: white;
 }
 
+video {
+  display: block;
+}
+
 a {
   color: orange;
 }

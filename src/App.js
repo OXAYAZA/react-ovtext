@@ -5,9 +5,9 @@ import Player from './Player';
 
 const video = {
   id: 'sample',
-  src: '//localhost:3000/video/swh-hero-clean.mp4',
+  src: '//localhost:3002/video/swh-hero-clean.mp4',
   preview: '',
-  poster: '//localhost:3000/img/swh-preview.png'
+  poster: '//localhost:3002/img/swh-preview.png'
 }
 
 function App() {
@@ -62,7 +62,7 @@ function App() {
               <div className={textHandler( 0.53, 0.55, "overlay-text-1" )}>Sample 5</div>
               <div className={textHandler( 0.62, 0.66, "overlay-text-4" )}>Sample 6</div>
               <div className={textHandler( 0.74, 0.78, "overlay-text-2" )}>Sample 7</div>
-              <div className={textHandler( 0.89, 0.94, "overlay-text-3" )}>Sample 7</div>
+              <div className={textHandler( 0.89, 0.94, "overlay-text-3" )}>Sample 8</div>
             </div>
 
             <h1 className="title">Overlaid Text for Video</h1>

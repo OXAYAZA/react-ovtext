@@ -3,7 +3,6 @@
  */
 import PropTypes from 'prop-types';
 
-// const { Fragment } = window.React;
 import { Fragment, useState, useRef, useEffect } from 'react';
 
 function Player( props ) {
@@ -19,7 +18,7 @@ function Player( props ) {
     if ( onProgress instanceof Function ) {
       onProgress({
         event: event,
-        progress: event.currentTarget.currentTime/event.currentTarget.duration,
+        progress: event.currentTarget.currentTime / event.currentTarget.duration,
         currentTime: event.currentTarget.currentTime,
         duration: event.currentTarget.duration,
         width: rect.width,
@@ -30,8 +29,8 @@ function Player( props ) {
 
   useEffect(() => {
     window.addEventListener( 'resize', resizeHandler );
-    return () => { window.removeEventListener( 'resize', resizeHandler ); }
-  });
+    return () => { window.removeEventListener( 'resize', resizeHandler ); };
+  }, []);
 
   return(
     <Fragment>
@@ -57,27 +56,25 @@ function Player( props ) {
           width="100%"
           height="100%"
           preload="auto"
-          // controls={activeVideo.preview ? true : false}
           controls={true}
           autoPlay={activeVideo.preview ? false : true}
           muted={activeVideo.preview ? false : true}
           loop={activeVideo.preview ? false : true}
           poster={activeVideo.poster ? activeVideo.poster : ''}
-
           ref={ref}
-          onLoadedData={ function ( event ) {
+          onLoadedData={ ( !isYoutube && onProgress instanceof Function ) ? ( event ) => {
             resizeHandler();
             progressHandler( event );
-          }}
-          onTimeUpdate={ function ( event ) {
+          } : null }
+          onTimeUpdate={ ( !isYoutube && onProgress instanceof Function ) ? ( event ) => {
             progressHandler( event );
-          }}
-          onPlay={ function ( event ) {
+          } : null }
+          onPlay={ ( !isYoutube && onProgress instanceof Function ) ? ( event ) => {
             progressHandler( event );
-          }}
-          onPause={ function ( event ) {
+          } : null }
+          onPause={ ( !isYoutube && onProgress instanceof Function ) ? ( event ) => {
             progressHandler( event );
-          }}
+          } : null }
         >
           <source src={activeVideo.src} type="video/mp4" />
           <source src={(activeVideo.src).replace('mp4', 'ogg')} type="video/ogg" />
